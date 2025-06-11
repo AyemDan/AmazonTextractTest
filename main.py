@@ -1,10 +1,36 @@
+import os
 import boto3
 import json
 import sys
 import time
 from config import AWS_REGION, CLI_PROFILE_NAME, INPUT_BUCKET_NAME, ROLE_ARN
 from job_tracker import JobTracker
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
+
+# AWS Configuration
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
+OUTPUT_DIRECTORY = os.getenv('OUTPUT_DIRECTORY', 'output')
+DEBUG_MODE = os.getenv('DEBUG_MODE', 'False').lower() == 'true'
+
+# Initialize AWS client
+textract_client = boto3.client(
+    'textract',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_REGION
+)
+
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_REGION
+)
 
 class ProcessType:
     DETECTION = 1
