@@ -1,0 +1,5 @@
+import os
+
+AWS_REGION = os.getenv('AWS_REGION')
+CLI_PROFILE_NAME = os.getenv('CLI_PROFILE_NAME')
+INPUT_BUCKET_NAME = os.getenv('INPUT_BUCKET_NAME') 
